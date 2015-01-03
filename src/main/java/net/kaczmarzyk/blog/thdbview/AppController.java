@@ -41,6 +41,9 @@ public class AppController {
 			@RequestParam("name") String name,
 			Model model) {
 		
+		Long templateId = templateRepo.findLatestTemplateId();
+		
+		model.addAttribute("templateId", templateId);
 		model.addAttribute("name", name);
 		
 		return "index";

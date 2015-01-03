@@ -23,9 +23,12 @@
  */
 package net.kaczmarzyk.blog.thdbview;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 
 public interface TemplateRepository extends CrudRepository<Template, Long> {
 
+	@Query("select t.id from Template t where t.id = (select max(id) from Template)")
+	Long findLatestTemplateId();
 }
