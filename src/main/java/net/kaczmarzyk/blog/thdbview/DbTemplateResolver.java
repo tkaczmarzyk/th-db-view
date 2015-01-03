@@ -43,18 +43,33 @@ public class DbTemplateResolver extends TemplateResolver {
 	
 	
 	public DbTemplateResolver() {
-        setResourceResolver(new DbTemplateResourceResolver());
+        setResourceResolver(new DbResourceResolver());
         setResolvablePatterns(Sets.newHashSet(PREFIX + "*"));
         setCharacterEncoding("UTF-8");
     }
 	
-	private class DbTemplateResourceResolver implements IResourceResolver {
+	@Override
+	public void setPrefix(String prefix) {
+		throw new UnsupportedOperationException();
+	}
+	
+	@Override
+	public void setSuffix(String suffix) {
+		throw new UnsupportedOperationException();
+	}
+	
+	@Override
+	protected String computeResourceName(TemplateProcessingParameters templateProcessingParameters) {
+		String templateName = templateProcessingParameters.getTemplateName();
+		return templateName.substring(PREFIX.length());
+	}
+	
+	private class DbResourceResolver implements IResourceResolver {
 
 		@Override
 		public InputStream getResourceAsStream(TemplateProcessingParameters templateProcessingParameters, String resourceName) {
 			
-			Long templateId = Long.valueOf(resourceName.substring(PREFIX.length()));
-            Template template = templateRepo.findOne(templateId);
+            Template template = templateRepo.findOne(Long.valueOf(resourceName));
             if (template != null) {
                 return new ByteArrayInputStream(template.getContent().getBytes());
             }
@@ -64,7 +79,7 @@ public class DbTemplateResolver extends TemplateResolver {
 		
 		@Override
 		public String getName() {
-			return "viewTemplateResourceResolver";
+			return "dbResourceResolver";
 		}
 	}
 }
