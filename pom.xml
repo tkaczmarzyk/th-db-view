@@ -37,7 +37,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<start-class>net.kaczmarzyk.blog.thdbview.ThymeleafDatabaseViewDemoApplication</start-class>
+		<start-class>net.kaczmarzyk.blog.thdbview.Application</start-class>
 		<java.version>1.8</java.version>
 	</properties>
 
