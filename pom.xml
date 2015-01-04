@@ -117,6 +117,7 @@
 				<version>2.2</version>
 			</extension>
 		</extensions>
+		<finalName>th-db-view</finalName>
 	</build>
 
 </project>
